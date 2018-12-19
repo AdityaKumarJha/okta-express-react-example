@@ -46,6 +46,14 @@ app.get('/admin', oidc.ensureAuthenticated(), (req, res) => {
     res.sendFile(path.join(__dirname, './public/admin.html'));
 });
 
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/home');
+});
+
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
 
 const database = new Sequelize({
     dialect: 'sqlite',
@@ -86,4 +94,3 @@ oidc.on('error', err => {
     // An error occurred while setting up OIDC
     console.log("oidc error: ", err);
 });
-
